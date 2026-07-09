@@ -33,6 +33,7 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env.local
+http-client.env.json
 
 # vercel
 .vercel
@@ -40,7 +41,3 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-# request test
-*.http
-test.ts

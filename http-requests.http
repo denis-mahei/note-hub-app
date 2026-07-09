@@ -1,0 +1,23 @@
+### Rgister:
+POST {{host}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "test552@example.com",
+  "password": "password123"
+}
+
+### Login:
+POST {{host}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "test552@example.com",
+  "password": "password123"
+}
+
+### Get user:
+GET {{host}}/users/me
+Content-Type: application/json
+
+###
