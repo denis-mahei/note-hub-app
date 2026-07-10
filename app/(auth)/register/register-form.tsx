@@ -1,14 +1,13 @@
 "use client";
 
-import React from "react";
 import { useForm } from "react-hook-form";
 import { AuthFormValues, authSchema } from "@/lib/schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { signIn } from "@/lib/api/client-api";
 import { useRouter } from "next/navigation";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { signUp } from "@/lib/api/client-api";
 
-const LoginForm = () => {
+const RegisterForm = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const {
@@ -21,28 +20,24 @@ const LoginForm = () => {
       email: "",
       password: "",
     },
-    mode: "onBlur",
   });
-
   const mutation = useMutation({
-    mutationFn: signIn,
+    mutationFn: signUp,
     onSuccess: (data) => {
       queryClient.setQueryData(["user"], data);
       router.push("/notes");
     },
   });
-
   return (
     <form onSubmit={handleSubmit((data) => mutation.mutate(data))}>
-      <label htmlFor="email">Email</label>
-      <input id="email" type="email" {...register("email")} />
+      <label htmlFor="email">Email:</label>
+      <input type="text" id="email" {...register("email")} />
       {errors.email && <span>{errors.email.message}</span>}
-      <label htmlFor="password">Password</label>
+      <label htmlFor="password">Password:</label>
       <input type="password" id="password" {...register("password")} />
       {errors.password && <span>{errors.password.message}</span>}
-      <button type="submit">login</button>
     </form>
   );
 };
 
-export default LoginForm;
+export default RegisterForm;

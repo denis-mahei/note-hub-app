@@ -11,7 +11,12 @@ export const getMe = async (): Promise<User> => {
   return data;
 };
 
-export const login = async (formValues: AuthFormValues): Promise<User> => {
+export const signIn = async (formValues: AuthFormValues): Promise<User> => {
   const { data } = await clientApi.post<User>("/auth/login", formValues);
+  return data;
+};
+
+export const signUp = async (formValues: AuthFormValues): Promise<User> => {
+  const { data } = await clientApi.post<User>("/auth/register", formValues);
   return data;
 };
