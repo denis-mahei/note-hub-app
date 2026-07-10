@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { serverApi } from "@/lib/api/server-api";
+import axios from "axios";
 
 export async function GET() {
   const cookie = await cookies();
@@ -12,19 +13,19 @@ export async function GET() {
   }
 
   try {
-    const res = await serverApi.get("/users/me", {
+    const { data } = await serverApi.get("/users/me", {
       headers: {
         Cookie: `accessToken=${token}`,
       },
     });
 
-    return NextResponse.json(res.data);
-  } catch (err) {
-    return NextResponse.json(
-      { message: "Oops... Something went wrong." },
-      {
-        status: 500,
-      },
-    );
+    return NextResponse.json(data);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return NextResponse.json(
+        { message: error?.response?.data.message },
+        { status: error?.response?.status },
+      );
+    }
   }
 }
