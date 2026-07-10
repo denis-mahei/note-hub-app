@@ -9,6 +9,7 @@ import { signUp } from "@/lib/api/client-api";
 import Link from "next/link";
 import axios from "axios";
 import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
 const RegisterForm = () => {
   const router = useRouter();
@@ -49,7 +50,9 @@ const RegisterForm = () => {
         <label htmlFor="password">Password:</label>
         <input type="password" id="password" {...register("password")} />
         {errors.password && <span>{errors.password.message}</span>}
-        <button type="submit">Sign Up</button>
+        <button type="submit" disabled={mutation.isPending}>
+          Sign Up{mutation.isPending ? <Loader2 /> : null}
+        </button>
       </form>
       <Link href="/login">Already have an account?</Link>
     </div>

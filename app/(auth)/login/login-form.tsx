@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import axios from "axios";
 import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -53,7 +54,14 @@ const LoginForm = () => {
         <label htmlFor="password">Password</label>
         <input type="password" id="password" {...register("password")} />
         {errors.password && <span>{errors.password.message}</span>}
-        <button type="submit">login</button>
+        <button
+          type="submit"
+          disabled={mutation.isPending}
+          className="flex items-center gap-2"
+        >
+          login
+          {mutation.isPending ? <Loader2 className="animate-spin" /> : null}
+        </button>
       </form>
       <Link href="/register">Don&apos;t have an account?</Link>
     </div>
