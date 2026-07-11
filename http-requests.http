@@ -20,4 +20,6 @@ Content-Type: application/json
 GET {{host}}/users/me
 Content-Type: application/json
 
-###
+### Logout:
+POST {{host}}/auth/logout
+Content-Type: application/json
