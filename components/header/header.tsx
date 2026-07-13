@@ -27,7 +27,7 @@ const Header = () => {
     },
   });
   return (
-    <header className="flex justify-between items-center py-3 px-4">
+    <header className="bg-background flex justify-between items-center py-3 px-4">
       <Link href="/" className="font-bold">
         NoteHub
       </Link>

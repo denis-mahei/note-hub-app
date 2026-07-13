@@ -26,7 +26,6 @@ const Providers = ({ children }: ProvidersProps) => {
   return (
     <QueryClientProvider client={queryClient}>
       <Header />
-      <Separator />
       {children}
       <Toaster position="top-center" richColors />
     </QueryClientProvider>

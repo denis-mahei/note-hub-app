@@ -6,7 +6,7 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <main className="flex min-h-svh w-full items-center justify-center">
+    <main className="flex flex-1 w-full items-center justify-center">
       {children}
     </main>
   );
