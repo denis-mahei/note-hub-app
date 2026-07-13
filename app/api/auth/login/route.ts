@@ -1,7 +1,7 @@
+import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 import { serverApi } from "@/lib/api/server-api";
 import { setAuthCookies } from "@/lib/set-auth-cookies";
-import axios from "axios";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();

@@ -20,3 +20,7 @@ export const signUp = async (formValues: AuthFormValues): Promise<User> => {
   const { data } = await clientApi.post<User>("/auth/register", formValues);
   return data;
 };
+
+export const signOut = async (): Promise<void> => {
+  await clientApi.post("/auth/logout");
+};
