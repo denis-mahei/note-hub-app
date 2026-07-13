@@ -77,7 +77,7 @@ const RegisterForm = ({
           >
             <FieldGroup>
               <Field>
-                <FieldLabel htmlFor="email">Email:</FieldLabel>
+                <FieldLabel htmlFor="email">Email</FieldLabel>
                 <Input
                   type="text"
                   id="email"
@@ -86,7 +86,7 @@ const RegisterForm = ({
                 {errors.email && <span>{errors.email.message}</span>}
               </Field>
               <Field>
-                <FieldLabel htmlFor="password">Password:</FieldLabel>
+                <FieldLabel htmlFor="password">Password</FieldLabel>
                 <Input
                   type="password"
                   id="password"
