@@ -1,9 +1,11 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { serverApi } from '@/lib/api/server-api';
 import axios from 'axios';
+import { revalidatePath } from 'next/cache';
 
-export async function GET() {
+export async function POST(req: NextRequest) {
+  const body = await req.json();
   const cookie = await cookies();
 
   const token = cookie.get('accessToken')?.value;
@@ -16,12 +18,12 @@ export async function GET() {
   }
 
   try {
-    const { data } = await serverApi.get('/users/me', {
+    const { data } = await serverApi.post('/notes', body, {
       headers: {
         Cookie: `accessToken=${token}`,
       },
     });
-
+    revalidatePath('/notes');
     return NextResponse.json(data);
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -30,5 +32,9 @@ export async function GET() {
         { status: error?.response?.status },
       );
     }
+    return NextResponse.json(
+      { message: 'Something went wrong!' },
+      { status: 500 },
+    );
   }
 }

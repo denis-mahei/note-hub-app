@@ -23,3 +23,17 @@ Content-Type: application/json
 ### Logout:
 POST {{host}}/auth/logout
 Content-Type: application/json
+
+### Get Notes:
+GET {{host}}/notes
+Content-Type: application/json
+
+### Add note:
+POST {{host}}/notes
+Content-Type: application/json
+
+{
+  "title": "Learn next.js",
+  "content": "Route handlers",
+  "tag": "Important"
+}
