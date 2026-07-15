@@ -1,5 +1,6 @@
 import React from 'react';
 import { getNotesById } from '@/lib/api/server-api';
+import NotesDialog from '@/components/notes/notes-dialog';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -8,14 +9,10 @@ interface PageProps {
 const Page = async ({ params }: PageProps) => {
   const { id } = await params;
   const note = await getNotesById(id);
-
   return (
-    <div>
-      <h1>This is Modal</h1>
-      <h2>{note.title}</h2>
-      <p>{note.content}</p>
-      <p>{note.tag}</p>
-    </div>
+    <>
+      <NotesDialog note={note} />
+    </>
   );
 };
 
