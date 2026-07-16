@@ -21,7 +21,7 @@ export const getNotesData = async () => {
   return data;
 };
 
-export const getNotesById = async (id: string) => {
+export const getNoteById = async (id: string) => {
   const cookie = await cookies();
 
   const token = cookie.get('accessToken')?.value;

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Note, NoteResponse, User } from '@/types/definitions';
+import { Note, User } from '@/types/definitions';
 import { AuthFormValues } from '@/lib/schemas/auth';
 import { NoteValues } from '@/lib/schemas/note';
 
@@ -42,3 +42,11 @@ export const createNote = async (
   const { data } = await clientApi.post<Note>('/notes', payload);
   return data;
 };
+
+export const getNoteById = async (id: string): Promise<Note> => {
+  const { data } = await clientApi.get<Note>(`/notes/${id}`);
+  return data;
+};
+
+export const deleteNote = async (id: string): Promise<void> =>
+  await clientApi.delete(`/notes/${id}`);

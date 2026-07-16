@@ -1,6 +1,6 @@
 import React from 'react';
 import { Note } from '@/types/definitions';
-import Link from 'next/link';
+import NoteItem from '@/components/notes/note-item';
 
 interface NotesListProps {
   notes: Note[];
@@ -14,11 +14,7 @@ const NotesList = ({ notes }: NotesListProps) => {
           key={note.id}
           className="p-2 border border-gray-200 rounded-xl"
         >
-          <Link href={`/notes/${note.id}`}>
-            <h2>Title: {note.title}</h2>
-            <p>Content: {note.content}</p>
-            <p>Categories: {note.tag}</p>
-          </Link>
+          <NoteItem note={note} />
         </li>
       ))}
     </ul>

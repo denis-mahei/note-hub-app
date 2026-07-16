@@ -1,5 +1,5 @@
 import React from 'react';
-import { getNotesById } from '@/lib/api/server-api';
+import { getNoteById } from '@/lib/api/client-api';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -7,7 +7,7 @@ interface PageProps {
 
 const Page = async ({ params }: PageProps) => {
   const { id } = await params;
-  const note = await getNotesById(id);
+  const note = await getNoteById(id);
 
   return (
     <div>
