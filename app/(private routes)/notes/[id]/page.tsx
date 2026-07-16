@@ -1,5 +1,7 @@
 import React from 'react';
-import { getNoteById } from '@/lib/api/client-api';
+import { getNoteById } from '@/lib/api/server-api';
+import NoteItem from '@/components/notes/note-item';
+import { Card, CardContent } from '@/components/ui/card';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -7,15 +9,13 @@ interface PageProps {
 
 const Page = async ({ params }: PageProps) => {
   const { id } = await params;
-  const note = await getNoteById(id);
+  const { content, title, tag, createdAt, updatedAt } =
+    await getNoteById(id);
 
   return (
-    <div>
-      <h1>This is Modal</h1>
-      <h2>{note.title}</h2>
-      <p>{note.content}</p>
-      <p>{note.tag}</p>
-    </div>
+    <Card className="max-w-sm">
+      <CardContent>{content}</CardContent>
+    </Card>
   );
 };
 

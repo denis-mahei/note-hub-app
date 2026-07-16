@@ -68,3 +68,36 @@ export async function DELETE(
     }
   }
 }
+
+export async function PATCH(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const body = await req.json();
+  const { id } = await params;
+  const cookie = await cookies();
+  const token = cookie.get('accessToken')?.value;
+
+  if (!token) {
+    return NextResponse.json({ message: 'Unauthorized' });
+  }
+  try {
+    const { data } = await serverApi.patch(`/notes/${id}`, body, {
+      headers: {
+        Cookie: `accessToken=${token}`,
+      },
+    });
+    return NextResponse.json(data);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return NextResponse.json(
+        { message: error?.response?.data.message },
+        { status: error?.response?.status },
+      );
+    }
+    return NextResponse.json(
+      { message: 'Something went wrong!' },
+      { status: 500 },
+    );
+  }
+}

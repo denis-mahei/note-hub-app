@@ -23,6 +23,7 @@ const NoteItem = ({ note }: NoteItemProps) => {
       router.refresh();
     },
   });
+
   return (
     <>
       <Link href={`/notes/${note.id}`} className="">

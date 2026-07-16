@@ -44,9 +44,17 @@ export const createNote = async (
 };
 
 export const getNoteById = async (id: string): Promise<Note> => {
-  const { data } = await clientApi.get<Note>(`/notes/${id}`);
+  const { data } = await clientApi.get(`/notes/${id}`);
   return data;
 };
 
 export const deleteNote = async (id: string): Promise<void> =>
   await clientApi.delete(`/notes/${id}`);
+
+export const updateNote = async (
+  id: string,
+  payload: Note,
+): Promise<Note> => {
+  const { data } = await clientApi.patch(`/notes/${id}`, payload);
+  return data;
+};
