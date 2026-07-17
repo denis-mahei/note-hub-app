@@ -8,7 +8,17 @@ export const serverApi = axios.create({
   baseURL: env.API_BASE_URL,
 });
 
-export const getNotesData = async () => {
+export const getNotesData = async ({
+  page = 1,
+  perPage = 8,
+  tag,
+  search,
+}: {
+  page?: number;
+  perPage?: number;
+  tag?: string;
+  search?: string;
+}) => {
   const cookie = await cookies();
 
   const token = cookie.get('accessToken')?.value;
@@ -16,6 +26,12 @@ export const getNotesData = async () => {
   const { data } = await serverApi.get<NoteResponse>(`/notes`, {
     headers: {
       Cookie: `accessToken=${token}`,
+    },
+    params: {
+      page,
+      perPage,
+      ...(tag && { tag }),
+      ...(search && { search }),
     },
   });
   return data;
