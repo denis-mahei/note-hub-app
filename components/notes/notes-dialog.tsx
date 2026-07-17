@@ -44,10 +44,12 @@ interface NotesDialogProps {
 const NotesDialog = ({ id }: NotesDialogProps) => {
   const [isEdit, setIsEdit] = useState(false);
   const router = useRouter();
+
   const { data } = useQuery<Note>({
-    queryKey: ['note'],
+    queryKey: ['note', id],
     queryFn: () => getNoteById(id),
   });
+
   const { handleSubmit, register, control } = useForm<Note>({
     defaultValues: {
       title: data?.title,

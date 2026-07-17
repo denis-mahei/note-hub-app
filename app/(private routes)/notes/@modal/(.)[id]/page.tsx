@@ -7,10 +7,9 @@ interface PageProps {
 
 const Page = async ({ params }: PageProps) => {
   const { id } = await params;
-
   return (
     <>
-      <NotesDialog id={id} />
+      <NotesDialog id={id} key={id} />
     </>
   );
 };
