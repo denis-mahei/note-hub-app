@@ -33,6 +33,12 @@ const Header = () => {
       </Link>
       {data ? (
         <div className="flex items-center gap-2">
+          <Link
+            href={'/notes'}
+            className="border px-2 py-1 rounded-full font-bold"
+          >
+            Notes
+          </Link>
           <UserBar user={data} />
           <Button onClick={() => mutation.mutate()}>Logout</Button>
         </div>

@@ -17,12 +17,15 @@ const Page = async ({ searchParams }: PageProps) => {
 
   const currentPage =
     typeof params.page === 'string' ? params.page : '1';
-  const tags = params.tag ? params.tag : '';
-  const { notes, totalPages } = await getNotesData({
-    page: currentPage,
-    tag: tags,
-  });
+  const tag = typeof params.tag === 'string' ? params.tag : '';
+  const search =
+    typeof params.search === 'string' ? params.search : '';
   const page = Number(currentPage);
+  const { notes, totalPages } = await getNotesData({
+    page,
+    tag,
+    search,
+  });
   return (
     <div>
       <SearchInput />
