@@ -49,7 +49,7 @@ const NoteForm = ({
     mode: 'onBlur',
     defaultValues,
   });
-  console.log(errors);
+
   return (
     <form onSubmit={handleSubmit((data) => onSubmit(data))}>
       <DialogHeader className="mb-5">

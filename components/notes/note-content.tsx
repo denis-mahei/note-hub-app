@@ -23,28 +23,30 @@ const NoteContent = ({
   create,
   update,
 }: NoteContentProps) => {
-  // const updatedAt = format(update, 'dd MMM yyyy, HH:mm', {
-  //   locale: enUS,
-  // });
-  // const createdAt = format(create, 'dd MMM yyyy, HH:mm', {
-  //   locale: enUS,
-  // });
-  const formattedDate = update
-    ? `Updated at: ${update}`
-    : `Created at: ${create}`;
+  const wasEdited = update !== create;
+
+  const updatedAt =
+    update &&
+    format(new Date(update), 'dd MMM yyyy, HH:mm', {
+      locale: enUS,
+    });
+  const createdAt =
+    create &&
+    format(new Date(create), 'dd MMM yyyy, HH:mm', {
+      locale: enUS,
+    });
+
   return (
     <CardContent className="flex flex-col gap-2">
       <CardTitle>{title}</CardTitle>
       <CardDescription>{content}</CardDescription>
-      <p>{formattedDate}</p>
-      {/*{update && (*/}
-      {/*  <p className="text-muted-foreground text-sm">*/}
-      {/*    Updated at: {updatedAt}*/}
-      {/*  </p>*/}
-      {/*)}*/}
-      {/*{create && (*/}
-      {/*  <p className="text-muted-foreground text-sm">{createdAt}</p>*/}
-      {/*)}*/}
+
+      <p className="text-muted-foreground text-xs">
+        {wasEdited
+          ? `Updated at: ${updatedAt}`
+          : `Created at: ${createdAt}`}
+      </p>
+
       <Badge>{tag}</Badge>
     </CardContent>
   );

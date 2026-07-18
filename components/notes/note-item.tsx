@@ -34,6 +34,8 @@ const NoteItem = ({ note }: NoteItemProps) => {
             title={note.title}
             content={note.content}
             tag={note.tag}
+            create={note.createdAt}
+            update={note.updatedAt}
           />
         </Link>
       </CardContent>
