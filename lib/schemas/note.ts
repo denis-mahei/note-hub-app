@@ -7,8 +7,8 @@ export const noteSchema = z.object({
     .min(4, {
       message: 'Note title must be a minimum of 4 characters',
     })
-    .max(15, {
-      message: 'Note title must be a maximum of 15 characters',
+    .max(30, {
+      message: 'Note title must be a maximum of 30 characters',
     }),
   content: z
     .string()

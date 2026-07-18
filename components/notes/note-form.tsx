@@ -39,11 +39,17 @@ const NoteForm = ({
   onSubmit,
   defaultValues,
 }: NoteFormProps) => {
-  const { control, register, handleSubmit } = useForm<NoteValues>({
+  const {
+    control,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<NoteValues>({
     resolver: zodResolver(noteSchema),
     mode: 'onBlur',
     defaultValues,
   });
+  console.log(errors);
   return (
     <form onSubmit={handleSubmit((data) => onSubmit(data))}>
       <DialogHeader className="mb-5">
@@ -88,7 +94,7 @@ const NoteForm = ({
           )}
         />
       </FieldGroup>
-      <DialogFooter>
+      <DialogFooter className="mt-5">
         <DialogClose
           render={<Button variant="outline">Cancel</Button>}
         />

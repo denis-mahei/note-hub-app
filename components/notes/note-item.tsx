@@ -9,6 +9,8 @@ import { useMutation } from '@tanstack/react-query';
 import { deleteNote } from '@/lib/api/client-api';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
+import { CardContent, CardFooter } from '@/components/ui/card';
+import NoteContent from '@/components/notes/note-content';
 
 interface NoteItemProps {
   note: Note;
@@ -26,14 +28,23 @@ const NoteItem = ({ note }: NoteItemProps) => {
 
   return (
     <>
-      <Link href={`/notes/${note.id}`} className="">
-        <h2>Title: {note.title}</h2>
-        <p>Content: {note.content}</p>
-        <p>Categories: {note.tag}</p>
-      </Link>
-      <Button variant="destructive" onClick={() => mutation.mutate()}>
-        <Trash2 />
-      </Button>
+      <CardContent>
+        <Link href={`/notes/${note.id}`}>
+          <NoteContent
+            title={note.title}
+            content={note.content}
+            tag={note.tag}
+          />
+        </Link>
+      </CardContent>
+      <CardFooter className="justify-end">
+        <Button
+          variant="destructive"
+          onClick={() => mutation.mutate()}
+        >
+          <Trash2 />
+        </Button>
+      </CardFooter>
     </>
   );
 };

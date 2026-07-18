@@ -46,7 +46,3 @@ export function CreateNote() {
     </Dialog>
   );
 }
-/*
-description:
-
- */
