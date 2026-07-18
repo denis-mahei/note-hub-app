@@ -10,12 +10,12 @@ import {
 } from 'next/navigation';
 
 const SearchInput = () => {
+  const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const search = searchParams.get('search');
   const [value, setValue] = useState(search ?? '');
   const [debounced] = useDebounce(value, 500);
-  const router = useRouter();
-  const pathname = usePathname();
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams);

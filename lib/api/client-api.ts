@@ -53,7 +53,7 @@ export const deleteNote = async (id: string): Promise<void> =>
 
 export const updateNote = async (
   id: string,
-  payload: Note,
+  payload: NoteValues,
 ): Promise<Note> => {
   const { data } = await clientApi.patch(`/notes/${id}`, payload);
   return data;

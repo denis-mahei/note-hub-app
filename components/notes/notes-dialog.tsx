@@ -18,7 +18,7 @@ import {
   updateNote,
 } from '@/lib/api/client-api';
 import { CardContent } from '@/components/ui/card';
-import { Note, TAGS } from '@/types/definitions';
+import { TAGS } from '@/types/definitions';
 import { Button } from '@/components/ui/button';
 import { Edit, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
@@ -36,6 +36,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { noteSchema, NoteValues } from '@/lib/schemas/note';
+import NoteForm from '@/components/notes/note-form';
 
 interface NotesDialogProps {
   id: string;
@@ -45,18 +48,11 @@ const NotesDialog = ({ id }: NotesDialogProps) => {
   const [isEdit, setIsEdit] = useState(false);
   const router = useRouter();
 
-  const { data } = useQuery<Note>({
+  const { data } = useQuery({
     queryKey: ['note', id],
     queryFn: () => getNoteById(id),
   });
 
-  const { handleSubmit, register, control } = useForm<Note>({
-    defaultValues: {
-      title: data?.title,
-      content: data?.content,
-      tag: data?.tag,
-    },
-  });
   const deleteMutation = useMutation({
     mutationFn: () => deleteNote(id),
     onSuccess: () => {
@@ -67,7 +63,7 @@ const NotesDialog = ({ id }: NotesDialogProps) => {
   });
 
   const updateMutation = useMutation({
-    mutationFn: (payload: Note) => updateNote(id, payload),
+    mutationFn: (payload: NoteValues) => updateNote(id, payload),
     onSuccess: () => {
       toast.success('Note updated successfully.');
       router.back();
@@ -105,63 +101,16 @@ const NotesDialog = ({ id }: NotesDialogProps) => {
               </Button>
             </CardContent>
           ) : (
-            <form
-              onSubmit={handleSubmit((data) =>
-                updateMutation.mutate(data),
-              )}
-            >
-              <DialogHeader className="mb-5">
-                <DialogTitle>New note</DialogTitle>
-                <DialogDescription>
-                  Make new note to your profile here. Click save when
-                  you&apos;re done.
-                </DialogDescription>
-              </DialogHeader>
-              <FieldGroup>
-                <Field>
-                  <Label htmlFor="title">Title:</Label>
-                  <Input id="title" {...register('title')} />
-                </Field>
-                <Field>
-                  <Label htmlFor="content">Content:</Label>
-                  <Textarea
-                    id="content"
-                    {...register('content')}
-                    placeholder="Enter your note here"
-                  />
-                </Field>
-                <Controller
-                  control={control}
-                  name="tag"
-                  render={({ field }) => (
-                    <Select
-                      value={field.value}
-                      onValueChange={field.onChange}
-                    >
-                      <SelectTrigger className="w-full max-w-48">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectLabel>Categories</SelectLabel>
-                          {TAGS.map((tag, idx) => (
-                            <SelectItem key={idx} value={tag}>
-                              {tag}
-                            </SelectItem>
-                          ))}
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  )}
-                />
-              </FieldGroup>
-              <DialogFooter>
-                <DialogClose
-                  render={<Button variant="outline">Cancel</Button>}
-                />
-                <Button type="submit">Save note</Button>
-              </DialogFooter>
-            </form>
+            <NoteForm
+              defaultValues={{
+                title: data.title,
+                content: data.content,
+                tag: data.tag,
+              }}
+              onSubmit={updateMutation.mutate}
+              title="Edit note"
+              description="Change you'r note"
+            />
           ))}
       </DialogContent>
     </Dialog>

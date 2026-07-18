@@ -6,6 +6,7 @@ import { revalidatePath } from 'next/cache';
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
+
   const cookie = await cookies();
 
   const token = cookie.get('accessToken')?.value;
