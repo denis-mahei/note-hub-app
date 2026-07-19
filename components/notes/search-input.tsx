@@ -8,8 +8,14 @@ import {
   useRouter,
   useSearchParams,
 } from 'next/navigation';
+import { Search } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
-const SearchInput = () => {
+interface SearchInputProps {
+  className?: string;
+}
+
+const SearchInput = ({ className }: SearchInputProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -20,7 +26,7 @@ const SearchInput = () => {
 
   useEffect(() => {
     if (isInitialMount.current) {
-      isInitialMount.current = true;
+      isInitialMount.current = false;
       return;
     } else {
       const params = new URLSearchParams(searchParams);
@@ -32,13 +38,18 @@ const SearchInput = () => {
   }, [debounced]);
 
   return (
-    <>
+    <div className={cn('relative w-full sm:w-64', className)}>
+      <Search
+        size={16}
+        className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground"
+      />
       <Input
         placeholder="Search notes..."
         onChange={(e) => setValue(e.target.value)}
         value={value}
+        className="pl-9"
       />
-    </>
+    </div>
   );
 };
 

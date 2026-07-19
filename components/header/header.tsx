@@ -27,20 +27,25 @@ const Header = () => {
     },
   });
   return (
-    <header className="bg-background flex justify-between items-center py-3 px-4">
-      <Link href="/" className="font-bold">
+    <header className="sticky top-0 z-10 -mx-4 -mt-4 flex items-center justify-between rounded-t-2xl border-b bg-background/80 px-6 py-4 backdrop-blur-sm supports-backdrop-filter:bg-background/60">
+      <Link href="/" className="text-lg font-bold tracking-tight">
         NoteHub
       </Link>
       {data ? (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4">
           <Link
             href={'/notes'}
-            className="border px-2 py-1 rounded-full font-bold"
+            className="rounded-full border px-3 py-1.5 text-sm font-semibold transition-colors hover:bg-accent"
           >
             Notes
           </Link>
           <UserBar user={data} />
-          <Button onClick={() => mutation.mutate()}>Logout</Button>
+          <Button
+            variant="outline"
+            onClick={() => mutation.mutate()}
+          >
+            Logout
+          </Button>
         </div>
       ) : null}
     </header>

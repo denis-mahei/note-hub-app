@@ -28,7 +28,7 @@ const NoteItem = ({ note }: NoteItemProps) => {
 
   return (
     <>
-      <CardContent>
+      <CardContent className="hover:scale-105 transition duration-300">
         <Link href={`/notes/${note.id}`}>
           <NoteContent
             title={note.title}

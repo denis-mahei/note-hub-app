@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono, Figtree } from 'next/font/google';
+import { Figtree, Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import Providers from '@/app/providers';
 import { cn } from '@/lib/utils';
@@ -42,12 +42,8 @@ export default function RootLayout({
         figtree.variable,
       )}
     >
-      <body className="flex bg-muted flex-col border rounded-2xl m-2">
-        <Providers>
-          <div className="bg-background h-[calc(100vh-1rem)] flex flex-col">
-            {children}
-          </div>
-        </Providers>
+      <body className="h-full bg-muted p-2 flex flex-col">
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

@@ -1,12 +1,12 @@
 'use client';
+
 import React from 'react';
 import {
-  QueryClientProvider,
   QueryClient,
+  QueryClientProvider,
 } from '@tanstack/react-query';
 import { Toaster } from 'sonner';
 import Header from '@/components/header/header';
-import { Separator } from '@/components/ui/separator';
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -25,8 +25,10 @@ const Providers = ({ children }: ProvidersProps) => {
   );
   return (
     <QueryClientProvider client={queryClient}>
-      <Header />
-      {children}
+      <div className="flex-1 flex flex-col gap-4 rounded-2xl border bg-background p-4">
+        <Header />
+        <main className="flex flex-1 flex-col">{children}</main>
+      </div>
       <Toaster position="top-center" richColors />
     </QueryClientProvider>
   );

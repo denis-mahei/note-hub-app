@@ -7,6 +7,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { format } from 'date-fns';
 import { enUS } from 'date-fns/locale';
+import { Clock } from 'lucide-react';
 
 interface NoteContentProps {
   title: string;
@@ -41,7 +42,8 @@ const NoteContent = ({
       <CardTitle>{title}</CardTitle>
       <CardDescription>{content}</CardDescription>
 
-      <p className="text-muted-foreground text-xs">
+      <p className="text-muted-foreground text-xs flex items-center gap-1">
+        <Clock size={12} color="black" />
         {wasEdited
           ? `Updated at: ${updatedAt}`
           : `Created at: ${createdAt}`}
