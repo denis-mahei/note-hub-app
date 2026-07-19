@@ -86,6 +86,7 @@ const NotesDialog = ({ id }: NotesDialogProps) => {
               onSubmit={updateMutation.mutate}
               title="Edit note"
               description="Change your note"
+              onClose={() => setIsEdit(false)}
             />
           ))}
       </DialogContent>

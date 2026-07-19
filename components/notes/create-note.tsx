@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import NoteForm from '@/components/notes/note-form';
 import { TAGS } from '@/types/definitions';
+import { StickyNotePlus } from 'lucide-react';
 
 export function CreateNote() {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,14 +33,18 @@ export function CreateNote() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger
-        render={<Button variant="outline">Create note</Button>}
+        render={
+          <Button variant="outline">
+            Create note <StickyNotePlus />
+          </Button>
+        }
       />
       <DialogContent className="sm:max-w-sm">
         <NoteForm
           defaultValues={defaultValues}
           title={'New note'}
           description="Make new note to your profile here. Click save when you're done."
-
+          onClose={() => setIsOpen(false)}
           onSubmit={mutation.mutate}
         />
       </DialogContent>

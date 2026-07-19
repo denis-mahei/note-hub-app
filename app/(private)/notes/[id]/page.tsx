@@ -1,7 +1,7 @@
 import React from 'react';
 import { getNoteById } from '@/lib/api/server-api';
 import { Card } from '@/components/ui/card';
-import NoteContent from '@/components/notes/note-content';
+import NoteView from '@/components/notes/note-view';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -9,18 +9,11 @@ interface PageProps {
 
 const Page = async ({ params }: PageProps) => {
   const { id } = await params;
-  const { content, title, tag, createdAt, updatedAt } =
-    await getNoteById(id);
+  const note = await getNoteById(id);
 
   return (
     <Card className="max-w-sm">
-      <NoteContent
-        title={title}
-        content={content}
-        tag={tag}
-        update={updatedAt}
-        create={createdAt}
-      />
+      <NoteView note={note} />
     </Card>
   );
 };

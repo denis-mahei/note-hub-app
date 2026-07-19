@@ -1,4 +1,5 @@
 'use client';
+
 import React from 'react';
 import {
   DialogClose,
@@ -25,12 +26,18 @@ import { TAGS } from '@/types/definitions';
 import { Button } from '@/components/ui/button';
 import { noteSchema, NoteValues } from '@/lib/schemas/note';
 import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  CardDescription,
+  CardFooter,
+  CardTitle,
+} from '@/components/ui/card';
 
 interface NoteFormProps {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
   onSubmit: (values: NoteValues) => void;
   defaultValues: NoteValues;
+  onClose?: () => void;
 }
 
 const NoteForm = ({
@@ -38,6 +45,7 @@ const NoteForm = ({
   description,
   onSubmit,
   defaultValues,
+  onClose,
 }: NoteFormProps) => {
   const {
     control,
@@ -52,10 +60,10 @@ const NoteForm = ({
 
   return (
     <form onSubmit={handleSubmit((data) => onSubmit(data))}>
-      <DialogHeader className="mb-5">
-        <DialogTitle>{title}</DialogTitle>
-        <DialogDescription>{description}</DialogDescription>
-      </DialogHeader>
+      <div className="mb-5">
+        <CardTitle>{title}</CardTitle>
+        <CardDescription>{description}</CardDescription>
+      </div>
       <FieldGroup>
         <Field>
           <Label htmlFor="title">Title:</Label>
@@ -94,12 +102,12 @@ const NoteForm = ({
           )}
         />
       </FieldGroup>
-      <DialogFooter className="mt-5">
-        <DialogClose
-          render={<Button variant="outline">Cancel</Button>}
-        />
+      <CardFooter className="flex justify-end gap-2.5 mt-5">
+        <Button variant="outline" onClick={onClose}>
+          Cancel
+        </Button>
         <Button type="submit">Save note</Button>
-      </DialogFooter>
+      </CardFooter>
     </form>
   );
 };

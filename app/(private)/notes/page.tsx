@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { TAGS } from '@/types/definitions';
 import SearchInput from '@/components/notes/search-input';
 import { MoveLeft, MoveRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { clsx } from 'clsx';
 
 interface PageProps {
@@ -63,6 +62,7 @@ const Page = async ({ searchParams }: PageProps) => {
           ))}
         </div>
         <SearchInput className="sm:ml-auto" />
+        <CreateNote />
       </div>
       <NotesList notes={notes} />
       <div className="flex items-center gap-2 justify-center">
@@ -97,7 +97,6 @@ const Page = async ({ searchParams }: PageProps) => {
           </Link>
         )}
       </div>
-      <CreateNote />
     </div>
   );
 };
