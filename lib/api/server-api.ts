@@ -3,7 +3,6 @@ import axios from 'axios';
 import { env } from '@/lib/env';
 import { cookies } from 'next/headers';
 import { Note, NoteResponse } from '@/types/definitions';
-import { setAuthCookies } from '@/lib/set-auth-cookies';
 
 export const serverApi = axios.create({
   baseURL: env.API_BASE_URL,
@@ -20,7 +19,11 @@ serverApi.interceptors.response.use(
   async (err) => {
     const originalRequest = err.config;
 
-    if (err.response?.status === 401 && !originalRequest._retry) {
+    if (
+      (err.response?.status === 401 ||
+        err.response?.status === 403) &&
+      !originalRequest._retry
+    ) {
       originalRequest._retry = true;
 
       if (isRefreshing) {
@@ -37,10 +40,13 @@ serverApi.interceptors.response.use(
             Cookie: `refreshToken=${refreshToken}`,
           },
         });
-        await setAuthCookies(res.headers['set-cookie']);
-        const cookie = await cookies();
-        const newToken = cookie.get('accessToken')?.value;
-        originalRequest.headers.Cookie = `accessToken=${newToken}`;
+        const setCookieHeader = res.headers['set-cookie'];
+        const newAccessToken = setCookieHeader
+          ?.find((c) => c.startsWith('accessToken='))
+          ?.split(';')[0]
+          ?.split('=')[1];
+
+        originalRequest.headers.Cookie = `accessToken=${newAccessToken}`;
         return serverApi(originalRequest);
       } catch (e) {
         return Promise.reject(e);

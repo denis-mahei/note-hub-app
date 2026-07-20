@@ -18,7 +18,7 @@ export const checkSession = async () => {
   return data.success;
 };
 
-export const updateMe = async (payload): Promise<User> => {
+export const updateMe = async (payload: User): Promise<User> => {
   const { data } = await clientApi.patch('/users/me', payload);
   return data;
 };
