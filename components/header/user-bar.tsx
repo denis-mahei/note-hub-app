@@ -7,11 +7,13 @@ interface UserBarProps {
 }
 
 const UserBar = ({ user }: UserBarProps) => {
-  const index = user.username.indexOf('@');
-  const userName = user.username.slice(0, index);
+  const name = user.username.includes('@')
+    ? user.username.split('@')[0]
+    : user.username;
+
   return (
     <div className="flex items-center gap-2">
-      <p className="text-taupe-900">{userName}</p>
+      <p className="text-taupe-900">{name}</p>
       <Image
         src={user.avatar}
         alt="Avatar"
