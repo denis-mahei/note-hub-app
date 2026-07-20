@@ -54,7 +54,7 @@ const NoteForm = ({
     formState: { errors },
   } = useForm<NoteValues>({
     resolver: zodResolver(noteSchema),
-    mode: 'onBlur',
+    mode: 'onTouched',
     defaultValues,
   });
 
@@ -68,6 +68,11 @@ const NoteForm = ({
         <Field>
           <Label htmlFor="title">Title:</Label>
           <Input id="title" {...register('title')} />
+          {errors.title && (
+            <small className="text-red-500">
+              {errors.title.message}
+            </small>
+          )}
         </Field>
         <Field>
           <Label htmlFor="content">Content:</Label>
@@ -76,6 +81,11 @@ const NoteForm = ({
             {...register('content')}
             placeholder="Enter your note here"
           />
+          {errors.content && (
+            <small className="text-red-500">
+              {errors.content.message}
+            </small>
+          )}
         </Field>
         <Controller
           control={control}
