@@ -2,6 +2,7 @@ import axios from 'axios';
 import { CheckSessionRequest, Note, User } from '@/types/definitions';
 import { AuthFormValues } from '@/lib/schemas/auth';
 import { NoteValues } from '@/lib/schemas/note';
+import { UsernameFormValues } from '@/lib/schemas/user';
 
 export const clientApi = axios.create({
   baseURL: '/api',
@@ -18,7 +19,9 @@ export const checkSession = async () => {
   return data.success;
 };
 
-export const updateMe = async (payload: User): Promise<User> => {
+export const updateMe = async (
+  payload: UsernameFormValues,
+): Promise<User> => {
   const { data } = await clientApi.patch('/users/me', payload);
   return data;
 };

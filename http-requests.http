@@ -37,3 +37,12 @@ Content-Type: application/json
   "content": "Route handlers",
   "tag": "Important"
 }
+
+### Update user:
+PATCH {{host}}/users/me
+Content-Type: application/json
+
+{
+  "email": "test552@example.com",
+  "username": "username@mail.com"
+}
