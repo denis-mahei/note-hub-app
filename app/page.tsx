@@ -2,6 +2,25 @@ import WelcomeCta from '@/components/welcome-cta';
 import { NotebookText } from 'lucide-react';
 import { Card, CardFooter } from '@/components/ui/card';
 import { CodeXml } from 'lucide-react';
+import { FaGithub, FaTelegram, FaLinkedin } from 'react-icons/fa';
+
+const SOCIAL_LINKS = [
+  {
+    href: 'https://github.com/denis-mahei',
+    icon: FaGithub,
+    label: 'GitHub',
+  },
+  {
+    href: 'https://www.linkedin.com/in/denys-mahei-dev',
+    icon: FaLinkedin,
+    label: 'LinkedIn',
+  },
+  {
+    href: 'https://t.me/denismahei',
+    icon: FaTelegram,
+    label: 'Telegram',
+  },
+];
 
 export default function Home() {
   return (
@@ -23,14 +42,30 @@ export default function Home() {
           <WelcomeCta />
         </main>
       </div>
-      <CardFooter className="justify-center">
-        <Card className="py-6 px-24">
-          <div className="flex items-center gap-2 border-b border-gray-200">
+      <footer className="justify-center">
+        <Card className="flex justify-center p-6 w-full">
+          <div className="flex justify-center items-center gap-2">
             <CodeXml size={18} />
-            <h2 className="font-bold">Developer: Denys Mahei</h2>
+            <span className="font-bold">Developer: Denys Mahei</span>
           </div>
+          <ul className="flex justify-center items-center gap-2.5 p-3">
+            {SOCIAL_LINKS.map(({ href, icon: Icon }) => (
+              <li key={href}>
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Icon size={24} />
+                </a>
+              </li>
+            ))}
+          </ul>
+          <p className="text-center text-muted-foreground">
+            All rights reserved ©
+          </p>
         </Card>
-      </CardFooter>
+      </footer>
     </>
   );
 }
