@@ -1,12 +1,12 @@
 'use client';
 
-import React, { Suspense } from 'react';
+import React, { useEffect } from 'react';
 import {
   useMutation,
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
-import { getMe, signOut } from '@/lib/api/client-api';
+import { checkSession, getMe, signOut } from '@/lib/api/client-api';
 import UserBar from '@/components/header/user-bar';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
@@ -16,11 +16,19 @@ import SkeletonUserBar from '@/components/header/skeleton-user-bar';
 const Header = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
+
+  useEffect(() => {
+    checkSession().then((success) => {
+      if (!success) router.push('/login');
+    });
+  }, []);
+
   const { data, isPending } = useQuery({
     queryKey: ['user'],
     queryFn: getMe,
     retry: false,
   });
+
   const mutation = useMutation({
     mutationFn: signOut,
     onSuccess: () => {

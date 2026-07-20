@@ -3,10 +3,54 @@ import axios from 'axios';
 import { env } from '@/lib/env';
 import { cookies } from 'next/headers';
 import { Note, NoteResponse } from '@/types/definitions';
+import { setAuthCookies } from '@/lib/set-auth-cookies';
 
 export const serverApi = axios.create({
   baseURL: env.API_BASE_URL,
 });
+
+export const refreshApi = axios.create({
+  baseURL: env.API_BASE_URL,
+});
+
+let isRefreshing = false;
+
+serverApi.interceptors.response.use(
+  (res) => res,
+  async (err) => {
+    const originalRequest = err.config;
+
+    if (err.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      if (isRefreshing) {
+        await new Promise((resolve) => setTimeout(resolve, 500));
+        return serverApi(originalRequest);
+      }
+
+      isRefreshing = true;
+      try {
+        const cookieStore = await cookies();
+        const refreshToken = cookieStore.get('refreshToken')?.value;
+        const res = await refreshApi.get('/auth/session', {
+          headers: {
+            Cookie: `refreshToken=${refreshToken}`,
+          },
+        });
+        await setAuthCookies(res.headers['set-cookie']);
+        const cookie = await cookies();
+        const newToken = cookie.get('accessToken')?.value;
+        originalRequest.headers.Cookie = `accessToken=${newToken}`;
+        return serverApi(originalRequest);
+      } catch (e) {
+        return Promise.reject(e);
+      } finally {
+        isRefreshing = false;
+      }
+    }
+    return Promise.reject(err);
+  },
+);
 
 export const getNotesData = async ({
   page = 1,

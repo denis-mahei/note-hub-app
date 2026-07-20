@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Note, User } from '@/types/definitions';
+import { CheckSessionRequest, Note, User } from '@/types/definitions';
 import { AuthFormValues } from '@/lib/schemas/auth';
 import { NoteValues } from '@/lib/schemas/note';
 
@@ -10,6 +10,12 @@ export const clientApi = axios.create({
 export const getMe = async (): Promise<User> => {
   const { data } = await clientApi.get<User>('/users/me');
   return data;
+};
+
+export const checkSession = async () => {
+  const { data } =
+    await clientApi.get<CheckSessionRequest>('/auth/session');
+  return data.success;
 };
 
 export const signIn = async (

@@ -32,3 +32,7 @@ export interface NoteResponse {
   notes: Note[];
   totalPages: number;
 }
+
+export type CheckSessionRequest = {
+  success: boolean;
+};
