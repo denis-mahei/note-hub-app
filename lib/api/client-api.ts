@@ -18,6 +18,11 @@ export const checkSession = async () => {
   return data.success;
 };
 
+export const updateMe = async (payload): Promise<User> => {
+  const { data } = await clientApi.patch('/users/me', payload);
+  return data;
+};
+
 export const signIn = async (
   formValues: AuthFormValues,
 ): Promise<User> => {
